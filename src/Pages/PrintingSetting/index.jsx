@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import './PrintingSetting.css';
 import { ReturnButton } from "../../Components";
 
-function MultiSelectDropdown() {
-  const [selectedItems, setSelectedItems] = useState([]);
+function MultiSelectDropdown({ selectedItems, setSelectedItems }) {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleCheckboxChange = (event) => {
@@ -22,21 +21,23 @@ function MultiSelectDropdown() {
   return (
     <div className={`custom-select ${isOpen ? 'open' : ''}`}>
       <div className="select-selected" onClick={toggleDropdown}>
-        {selectedItems.length > 0 ? selectedItems.join(', ') : 'Chọn mục'}
+        {selectedItems.length > 0 ? selectedItems.join(', ') : 'Select options'}
       </div>
-      <div className="select-items">
-        {['PDF', 'WORD', 'PPT', 'EXCEL'].map((item) => (
-          <div key={item}>
-            <input
-              type="checkbox"
-              value={item}
-              checked={selectedItems.includes(item)}
-              onChange={handleCheckboxChange}
-            />
-            {item}
-          </div>
-        ))}
-      </div>
+      {isOpen && (
+        <div className="select-items">
+          {['PDF', 'WORD', 'PPT', 'EXCEL'].map((item) => (
+            <div key={item}>
+              <input
+                type="checkbox"
+                value={item}
+                checked={selectedItems.includes(item)}
+                onChange={handleCheckboxChange}
+              />
+              {item}
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
@@ -78,14 +79,14 @@ function PrintingSetting() {
             <div class="grid-item1">
               <label htmlFor="issue-date">Ngày cấp giấy định kỳ</label>
             </div>
-            <div class="grid-item">
+            <div class="grid-item2">
             <input type="date" id="issue-date" name="issue-date" />            
             </div>
-            <div class="grid-item">
-            <button onClick={applyChanges} className="btn_add"> Xác nhận </button>
+            <div class="grid-item3">
+            <button onClick={applyChanges} className="btn add"> Xác nhận </button>
             </div>
-            <div class="grid-item">
-            <button onClick={deleteSelected} className="btn_delete"> Xoá </button>
+            <div class="grid-item4">
+            <button onClick={deleteSelected} className="btn delete"> Xoá </button>
             </div>
           </div>
         
@@ -93,31 +94,31 @@ function PrintingSetting() {
             <div class="grid-item1">
               <label htmlFor="issue-date">Số giấy cấp định </label>
             </div>
-            <div class="grid-item">
-              <input type="number" id="issue-number" name="issue-number" />            
+            <div class="grid-item2">
+              <input type="number" id="issue-number" name="issue-number" min="1" />
             </div>
-            <div class="grid-item">
-              <button onClick={applyChanges} className="btn_add"> Xác nhận </button>
+            <div class="grid-item3">
+              <button onClick={applyChanges} className="btn add"> Xác nhận </button>
             </div>
-            <div class="grid-item">
-              <button onClick={deleteSelected} className="btn_delete"> Xoá </button>
+            <div class="grid-item4">
+              <button onClick={deleteSelected} className="btn delete"> Xoá </button>
             </div>
           </div> 
         
-          <div class="grid-container">
-            <div class="grid-item1">
-              <label htmlFor="issue-date">Định dạng file cho phép </label>
+          <div className="grid-container">
+            <div className="grid-item1">
+              <label htmlFor="file-format">Định dạng file cho phép </label>
             </div>
-            <div class="grid-item">
+            <div className="grid-item2">
               <MultiSelectDropdown selectedItems={selectedItems} setSelectedItems={setSelectedItems} />
             </div>
-            <div class="grid-item">
-              <button onClick={applyChanges} className="btn_add"> Xác nhận </button>
+            <div className="grid-item3">
+              <button onClick={applyChanges} className="btn add"> Xác nhận </button>
             </div>
-            <div class="grid-item">
-              <button onClick={deleteSelected} className="btn_delete"> Xoá </button>
+            <div className="grid-item4">
+              <button onClick={deleteSelected} className="btn delete"> Xoá </button>
             </div>
-          </div> 
+          </div>
         </div>
       </div>
       {/* Success Popup */}
